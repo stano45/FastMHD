@@ -12,10 +12,10 @@ import java.util.Vector;
 
 
 
-public class Logic {
+class Logic {
 
     private static InputZastavky input;
-    private static ArrayList<Spoj> spoje;
+    static ArrayList<Spoj> spoje;
 
 
     static void execute(InputZastavky inputParam) {
@@ -23,25 +23,6 @@ public class Logic {
         najdiSpoj();
         ohodnotSpoje();
         zoradSpoje();
-        for (Spoj s : spoje) {
-
-            System.out.println("-----------------------------------------");
-            System.out.println(s.value);
-            System.out.println(s.vychodzia);
-            for (int i = 0; i < s.linky.size(); i++)
-            {
-                System.out.println(s.linky.get(i));
-                System.out.println(s.casLinky.get(i));
-                System.out.println(s.url.get(i));
-                if (!s.priamySpoj)
-                {
-                    System.out.println(s.prestupy.get(i));
-                }
-            }
-            System.out.println(s.konecna);
-            System.out.println();
-
-        }
     }
 
     private static void najdiSpoj () {
@@ -118,41 +99,46 @@ public class Logic {
     {
         for (Spoj aktualnySpoj : spoje)
         {
+
             for (int i = 0; i < aktualnySpoj.linky.size(); i++)
             {
-                String vychodzia;
-                String konecna;
-                if (i >= aktualnySpoj.prestupy.size())
+                if (aktualnySpoj.casLinky.get(i) != null)
                 {
-                    if (aktualnySpoj.prestupy.size() != 0)
+                    String vychodzia;
+                    String konecna;
+                    if (i >= aktualnySpoj.prestupy.size())
                     {
-                        vychodzia = aktualnySpoj.prestupy.get(i - 1).meno;
+                        if (aktualnySpoj.prestupy.size() != 0)
+                        {
+                            vychodzia = aktualnySpoj.prestupy.get(i - 1).meno;
+                        }
+                        else
+                        {
+                            vychodzia = aktualnySpoj.vychodzia.meno;
+                        }
+                        konecna = aktualnySpoj.konecna.meno;
                     }
                     else
                     {
-                        vychodzia = aktualnySpoj.vychodzia.meno;
+                        if (i > 0)
+                        {
+                            vychodzia = aktualnySpoj.prestupy.get(i).meno;
+                        }
+                        else
+                        {
+                            vychodzia = aktualnySpoj.vychodzia.meno;
+                        }
+                        konecna = aktualnySpoj.prestupy.get(i).meno;
                     }
-                    konecna = aktualnySpoj.konecna.meno;
+                    System.out.println(vychodzia + " --------- " + konecna);
+
+                    aktualnySpoj.casLinky.add(Scraper.scrapeCas(aktualnySpoj.url.get(i),
+                            vychodzia, konecna, aktualnySpoj.linky.get(i).substring(4)));
+
+
+                    aktualnySpoj.value += aktualnySpoj.casLinky.get(i).casVSpoji;
                 }
-                else
-                {
-                    if (i > 0)
-                    {
-                        vychodzia = aktualnySpoj.prestupy.get(i).meno;
-                    }
-                    else
-                    {
-                        vychodzia = aktualnySpoj.vychodzia.meno;
-                    }
-                    konecna = aktualnySpoj.prestupy.get(i).meno;
-                }
-                System.out.println(vychodzia + " --------- " + konecna);
 
-                aktualnySpoj.casLinky.add(Scraper.scrapeCas(aktualnySpoj.url.get(i),
-                        vychodzia, konecna, aktualnySpoj.linky.get(i).substring(4)));
-
-
-                aktualnySpoj.value += aktualnySpoj.casLinky.get(i).casVSpoji;
             }
 
         }

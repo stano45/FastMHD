@@ -2,6 +2,7 @@ package com.stanley.fastmhd;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -161,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Vychodzia: " + Scraper.zastavky[input.vychodziaIndex].meno);
                 input.konecnaIndex = data.getIntExtra("K_INT", 0);
                 System.out.println("Konecna: " + Scraper.zastavky[input.konecnaIndex].meno);
-                Logic.execute(input);
+                AsyncTask c = new CasyAsync().execute();
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Toast toast = Toast.makeText(this,
@@ -211,6 +212,39 @@ public class MainActivity extends AppCompatActivity {
             this.mozneK = mozneK;
         }
 
+    }
+
+    public class CasyAsync extends AsyncTask<Void, Void, Void>
+    {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Logic.execute(input);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            for (Spoj s : Logic.spoje)
+            {
+                System.out.println("-----------------------------------------");
+                System.out.println(s.value);
+                System.out.println(s.vychodzia);
+                for (int i = 0; i < s.linky.size(); i++)
+                {
+                    System.out.println(s.linky.get(i));
+                    System.out.println(s.casLinky.get(i));
+                    System.out.println(s.url.get(i));
+                    if (!s.priamySpoj)
+                    {
+                        System.out.println(s.prestupy.get(i));
+                    }
+                }
+                System.out.println(s.konecna);
+                System.out.println();
+
+            }
+        }
     }
 }
 

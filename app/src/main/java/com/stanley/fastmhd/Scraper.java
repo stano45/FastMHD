@@ -1,5 +1,7 @@
 package com.stanley.fastmhd;
 
+import android.widget.Toast;
+
 import java.io.IOException;
 
 import org.jsoup.Connection.Response;
@@ -16,18 +18,28 @@ class Scraper{
 
 	//vsetky zastavky, ktore maju v mene ciarku, co sposobovalo problem, v kode su ako vynimka
     //checkovane
-	private static String[] zastavkyCiarka = {"Poštová, Martinus", "Sad J. Kráľa, Divadlo Aréna", "Vysoká, Tchibo Outlet",
-												"Záhumenice, Drevona", "Prievoz, most", "Opletalova, VW5", "Bory, rázcestie", "Jána Jonáša, VW1",
-												"Volkswagen, VW2", "Sihoť, BVS", "Devín, škola", "Štrbská, Hrad Devín", "Devín, Svätopluk",
-												"Segnáre, nadchod", "Lamač, Staré záhrady", "Trnavská, NAD", "Vajnory, konečná",
-												"Vajnory, nadjazd", "Studená, zastávka", "Žabí majer, záhrady", "Trávna, Drevona",
-												"Avion, IKEA", "Galvaniho, ubytovňa Prima", "Letisko, parkovisko", "Vlčie hrdlo, záhrady",
-												"Vlčie hrdlo, sídlisko", "Údernícka, kúpalisko", "Kopčianska, stred", "Kopčany, sídlisko",
-												"Jarovce, záhrady", "Čunovo, záhrady", "Čunovo, priehrada", "Čunovo, kostol",
-												"Patrónka, Kaufland", "Rajka, Benzinkút", "Rajka, Autóbuszforduló", "Rajka, Szabadság tér",
-												"Rajka, Véradópark", "Wolfsthal, Bhf, Hauptstrasse 40", "Hainburg/Donau, Pressburger Reichsstrasse",
-												"Hainburg/Donau, Hauptplatz", "Hainburg/Donau, Pfaffenbergweg", "Hainburg/Donau, Wiener Tor",
-												"Hainburg/Donau, Ungartor/B9"};
+	private static String[] zastavkyCiarka =
+			{"Poštová, Martinus", "Sad J. Kráľa, Divadlo Aréna", "Vysoká, Tchibo Outlet",
+					"Záhumenice, Drevona", "Prievoz, most", "Opletalova, VW5",
+					"Bory, rázcestie", "Jána Jonáša, VW1",
+					"Volkswagen, VW2", "Sihoť, BVS", "Devín, škola", "Štrbská, Hrad Devín",
+					"Devín, Svätopluk",
+					"Segnáre, nadchod", "Lamač, Staré záhrady", "Trnavská, NAD",
+					"Vajnory, konečná",
+					"Vajnory, nadjazd", "Studená, zastávka", "Žabí majer, záhrady",
+					"Trávna, Drevona",
+					"Avion, IKEA", "Galvaniho, ubytovňa Prima", "Letisko, parkovisko",
+					"Vlčie hrdlo, záhrady",
+					"Vlčie hrdlo, sídlisko", "Údernícka, kúpalisko", "Kopčianska, stred",
+					"Kopčany, sídlisko",
+					"Jarovce, záhrady", "Čunovo, záhrady", "Čunovo, priehrada", "Čunovo, kostol",
+					"Patrónka, Kaufland", "Rajka, Benzinkút", "Rajka, Autóbuszforduló",
+					"Rajka, Szabadság tér",
+					"Rajka, Véradópark", "Wolfsthal, Bhf, Hauptstrasse 40",
+					"Hainburg/Donau, Pressburger Reichsstrasse",
+					"Hainburg/Donau, Hauptplatz", "Hainburg/Donau, Pfaffenbergweg",
+					"Hainburg/Donau, Wiener Tor",
+					"Hainburg/Donau, Ungartor/B9"};
 
 
 	//hlavna metoda Scrapera,
@@ -46,7 +58,8 @@ class Scraper{
 
 						if (cisloLinky != null && !cisloLinky.text().equals("44")) {
 
-							String urlLinky = linka.select("a").attr("abs:href");
+							String urlLinky = linka.select("a")
+									.attr("abs:href");
 							Element smerTam = linka.selectFirst("h3");
 							Element smerSpat = linka.select("h3").last();
 							Element vsZ = linka.selectFirst("td:not(.top)");
@@ -220,30 +233,52 @@ class Scraper{
 
 
 	//metoda na zistenie (zatial najblizsieho) casu linky
-	static CasLinky scrapeCas(String url, String vychodzia, String konecna, String smer)
-    {
-        //stiahne html z url spoja
-        Document d = parseDoc(url);
-        System.out.println(smer + url);
-        Element e2 = d.selectFirst("table[class=tabulka]:has(td[colspan=2]:contains("
-                + smer + "))");
-        System.out.println(e2.text());
-        Element e3 = e2.selectFirst("td:contains(" + vychodzia + ")");
-        System.out.println(e3.text());
-        Element e4 = e3.selectFirst("a");
-        System.out.println(e4.text());
+	static CasLinky scrapeCas(String url, String vychodzia, String konecna, String smer) {
+		System.out.println("//////////////////////////////////////////////////////////////////");
 
-        url = "http://imhd.sk" + e4.attr("href");
-        d = parseDoc(url);
-        String s = "tr[class='zastavky_riadok']:has(td:contains(" + konecna + "))";
-        e4 = d.selectFirst(s);
-        Element casy = d.selectFirst("tr.cp_odchody:has(td[class*='najblizsi'])");
+		//stiahne html z url spoja
+		Document d = parseDoc(url);
 
-        CasLinky temp = new CasLinky();
-        temp.casVSpoji = Integer.parseInt(e4.selectFirst("td").text());
-        temp.hodina = Integer.parseInt(casy.select("td.cp_hodina").text());
-        temp.minuta = Integer.parseInt(casy.select("td[class *='najblizsi']").text()
-                .substring(0,2));
+		smer = smer.replace("VW5, Devínska Nová Ves,", "VW5;");
+
+
+		System.out.println("vychodzia: " + vychodzia);
+		System.out.println("konecna: " + konecna);
+		System.out.println("smer: " + smer + " url: " + url);
+		Element e2 = d.selectFirst("table[class=tabulka]:has(td[colspan=2]:contains("
+				+ smer + "))");
+		System.out.println("element 2: " + e2.text());
+		Element e3 = e2.selectFirst("td:contains(" + vychodzia + ")");
+		System.out.println("element 3: " + e3.text());
+		Element e4 = e3.selectFirst("a");
+		System.out.println("element 4: " + e4.text());
+
+		url = "https://imhd.sk" + e4.attr("href");
+		d = parseDoc(url);
+		String s = "tr[class='zastavky_riadok']:has(td:contains(" + konecna + "))";
+		e4 = d.selectFirst(s);
+		Element casy = d.selectFirst("tr.cp_odchody:has(td[class*='najblizsi'])");
+
+		CasLinky temp = new CasLinky();
+		if (casy != null)
+		{
+			System.out.println("casVSpoji: " + e4.selectFirst("td").text());
+			System.out.println("hodina: " + casy.select("td.cp_hodina").text());
+			System.out.println("minuta: " + casy.select("td[class *='najblizsi']").text()
+					.substring(0,2));
+
+
+			temp.casVSpoji = Integer.parseInt(e4.selectFirst("td").text());
+			temp.hodina = Integer.parseInt(casy.select("td.cp_hodina").text());
+			temp.minuta = Integer.parseInt(casy.select("td[class *='najblizsi']").text()
+					.substring(0,2));
+		}
+		else
+		{
+			temp = null;
+		}
+
+
         return temp;
     }
 
