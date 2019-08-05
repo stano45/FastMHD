@@ -1,8 +1,8 @@
 package com.stanley.fastmhd;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -44,9 +44,9 @@ public class ChoiceActivity extends AppCompatActivity implements AdapterView.OnI
         list.setOnItemClickListener(this);
 
     }
+
     public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-        if (!vDone)
-        {
+        if (!vDone) {
             id0 = position;
             text.setText(R.string.vyberK);
             adapter = new ArrayAdapter<>(this, R.layout.text_layout);
@@ -55,9 +55,7 @@ public class ChoiceActivity extends AppCompatActivity implements AdapterView.OnI
             }
             list.setAdapter(adapter);
             vDone = true;
-        }
-        else
-        {
+        } else {
             id1 = position;
             Intent intent = new Intent();
             intent.putExtra("V_INT", vychodzie.get(id0));

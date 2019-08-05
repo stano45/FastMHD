@@ -1,10 +1,15 @@
 <resources>
     <string name="app_name">FastMHD</string>
     <string name="action_settings">Settings</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Stahujem MHD info…</string>
     <string name="vychodzia">Vychodzia zastavka</string>
     <string name="konecna">Konecna zastavka</string>
     <string name="vyhladaj">Vyhladaj</string>
     <string name="vyberV">Vyber východziu zastávku</string>
     <string name="vyberK">Vyber konečnú zastávku</string>
+    <string name="molec">molec</string>
+    <string name="roman">roman</string>
+    <string name="empty">           </string>
+    <string name="zoznam">Dostupné spoje:</string>
+    <string name="vyhladavam">Vyhladavam spoje…</string>
 </resources>

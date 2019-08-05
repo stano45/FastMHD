@@ -3,30 +3,15 @@ package com.stanley.fastmhd;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-
-
-/*
-TODO:   - vo vyhodnoteni spoja asynctask na casy
-        - vyhodnotit najlepsi spoj podla casu, pri conflictoch brat do uvahy pocet prestupov
-        - spravit prehladny list (new class?), ten proceduralne vypisat na novu activity
-        - handle bad internet connection
-        - save data to disk, use at will, learn how to check version
-        - disable back button on choice activity?
-
-TOLEARN:
-
- */
-
 public class MainActivity extends AppCompatActivity {
 
     private String vDirtyInput;
@@ -36,10 +21,39 @@ public class MainActivity extends AppCompatActivity {
     private boolean inputDone = false;
     private boolean zastavkyVyhladane = false;
 
+    public static String simplifyString(String s) {
+        final String special = "áéíóúäôďťňľčžšŕľ";
+        final String normal = "aeiouaodtnlczsrl";
+
+        s = s.toLowerCase();
+
+        for (int i = 0; i < s.length(); i++) {
+            if (special.indexOf(s.charAt(i)) != -1) {
+                char nChar = normal.charAt(special.indexOf(s.charAt(i)));
+
+                if (i == 0) {
+                    s = nChar + s.substring(1);
+                } else {
+                    s = s.substring(0, i) + nChar + s.substring(i + 1);
+                }
+            }
+        }
+
+        return s;
+
+
+    }
+
+    //vycisti input
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
+        TextView text = findViewById(R.id.vychodziaInput);
+        text.setText("");
+        text = findViewById(R.id.konecnaInput);
+        text.setText("");
 
         final Button b = findViewById(R.id.button);
         b.setOnClickListener(new View.OnClickListener() {
@@ -55,8 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("search done");
                     inputDone = false;
                 }
-                if (zastavkyVyhladane)
-                {
+                if (zastavkyVyhladane) {
                     vyberZastavky();
                     inputDone = false;
                     zastavkyVyhladane = false;
@@ -66,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //vycisti input
-
     public boolean getInput() {
         TextView vInput = findViewById(R.id.vychodziaInput);
         TextView kInput = findViewById(R.id.konecnaInput);
@@ -75,8 +86,7 @@ public class MainActivity extends AppCompatActivity {
         String vychodzia = simplifyString("" + vInput.getText());
         String konecna = simplifyString("" + kInput.getText());
 
-        if (vychodzia.length() < 3 || konecna.length() < 3)
-        {
+        if (vychodzia.length() < 3 || konecna.length() < 3) {
             Toast toast = Toast.makeText(this, "Vyhladavajte s minimalne 3 znakmi.", Toast.LENGTH_SHORT);
             toast.show();
             return false;
@@ -86,26 +96,21 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean vyhladajZastavky()
-    {
+    public boolean vyhladajZastavky() {
         String vychodzia = vDirtyInput;
         String konecna = kDirtyInput;
         ArrayList<Integer> mozneV = new ArrayList<>();
 
-        for (int i = 0; i < Scraper.zastavky.length; i++)
-        {
-            if (Scraper.zastavky[i] != null)
-            {
-                if (simplifyString(Scraper.zastavky[i].meno).contains(vychodzia))
-                {
+        for (int i = 0; i < Scraper.zastavky.length; i++) {
+            if (Scraper.zastavky[i] != null) {
+                if (simplifyString(Scraper.zastavky[i].meno).contains(vychodzia)) {
                     mozneV.add(i);
                 }
             }
 
         }
 
-        if (mozneV.size() == 0)
-        {
+        if (mozneV.size() == 0) {
             Toast toast = Toast.makeText(this,
                     "Vychodzia zastavka nenajdena.", Toast.LENGTH_SHORT);
             toast.show();
@@ -116,35 +121,28 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Integer> mozneK = new ArrayList<>();
 
 
-
-        for (int i = 0; i < Scraper.zastavky.length; i++)
-        {
-            if (Scraper.zastavky[i] != null)
-            {
-                if (simplifyString(Scraper.zastavky[i].meno).contains(konecna))
-                {
+        for (int i = 0; i < Scraper.zastavky.length; i++) {
+            if (Scraper.zastavky[i] != null) {
+                if (simplifyString(Scraper.zastavky[i].meno).contains(konecna)) {
                     mozneK.add(i);
                 }
             }
 
         }
 
-        if (mozneK.size() == 0)
-        {
+        if (mozneK.size() == 0) {
             Toast toast = Toast.makeText(this,
                     "Konecna zastavka nenajdena. Skuste znovu.", Toast.LENGTH_SHORT);
             toast.show();
             return false;
         }
 
-        MozneZastavky temp = new MozneZastavky(mozneV, mozneK);
-        mozneZ = temp;
+        mozneZ = new MozneZastavky(mozneV, mozneK);
 
         return true;
     }
 
-    public void vyberZastavky()
-    {
+    public void vyberZastavky() {
         Intent intent = new Intent(this, ChoiceActivity.class);
         Bundle extras = new Bundle();
         extras.putIntegerArrayList("VYCHODZIE_Z", mozneZ.mozneV);
@@ -159,10 +157,15 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 input.vychodziaIndex = data.getIntExtra("V_INT", 0);
-                System.out.println("Vychodzia: " + Scraper.zastavky[input.vychodziaIndex].meno);
+                //System.out.println("Vychodzia: " + Scraper.zastavky[input.vychodziaIndex].meno);
                 input.konecnaIndex = data.getIntExtra("K_INT", 0);
-                System.out.println("Konecna: " + Scraper.zastavky[input.konecnaIndex].meno);
-                AsyncTask c = new CasyAsync().execute();
+                //System.out.println("Konecna: " + Scraper.zastavky[input.konecnaIndex].meno);
+                new CasyAsync().execute();
+                findViewById(R.id.vychodziaInput).setVisibility(View.INVISIBLE);
+                findViewById(R.id.konecnaInput).setVisibility(View.INVISIBLE);
+                findViewById(R.id.button).setVisibility(View.INVISIBLE);
+                findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+                findViewById(R.id.vyhladavamText).setVisibility(View.VISIBLE);
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Toast toast = Toast.makeText(this,
@@ -172,78 +175,59 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static String simplifyString(String s)
-    {
-        final String special = "áéíóúäôďťňľčžšŕľ";
-        final String normal = "aeiouaodtnlczsrl";
-
-        s = s.toLowerCase();
-
-        for (int i = 0; i < s.length(); i++)
-        {
-            if (special.indexOf(s.charAt(i)) != -1)
-            {
-                char nChar = normal.charAt(special.indexOf(s.charAt(i)));
-
-                if (i == 0)
-                {
-                    s = nChar + s.substring(1 , s.length());
-                }
-                else
-                {
-                    s = s.substring(0, i) + nChar + s.substring(i + 1, s.length());
-                }
-            }
-        }
-
-        return s;
-
-
-    }
-
-    public class MozneZastavky
-    {
+    public class MozneZastavky {
         private ArrayList<Integer> mozneV;
         private ArrayList<Integer> mozneK;
 
-        MozneZastavky(ArrayList<Integer> mozneV, ArrayList<Integer> mozneK)
-        {
+        MozneZastavky(ArrayList<Integer> mozneV, ArrayList<Integer> mozneK) {
             this.mozneV = mozneV;
             this.mozneK = mozneK;
         }
 
     }
 
-    public class CasyAsync extends AsyncTask<Void, Void, Void>
-    {
+    public class CasyAsync extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
             Logic.execute(input);
             return null;
         }
 
+
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            for (Spoj s : Logic.spoje)
-            {
-                System.out.println("-----------------------------------------");
-                System.out.println(s.value);
-                System.out.println(s.vychodzia);
-                for (int i = 0; i < s.linky.size(); i++)
-                {
-                    System.out.println(s.linky.get(i));
-                    System.out.println(s.casLinky.get(i));
-                    System.out.println(s.url.get(i));
-                    if (!s.priamySpoj)
-                    {
-                        System.out.println(s.prestupy.get(i));
+            findViewById(R.id.vychodziaInput).setVisibility(View.VISIBLE);
+            findViewById(R.id.konecnaInput).setVisibility(View.VISIBLE);
+            findViewById(R.id.button).setVisibility(View.VISIBLE);
+            findViewById(R.id.progressBar).setVisibility(View.GONE);
+            findViewById(R.id.vyhladavamText).setVisibility(View.GONE);
+            for (Spoj s : Logic.spoje) {
+                if (s.value != 1000) {
+                    System.out.println("-----------------------------------------");
+                    System.out.println("Hodnota:" + s.value);
+                    System.out.println("V:" + s.vychodzia.meno);
+                    for (int i = 0; i < s.linky.size(); i++) {
+                        System.out.println(s.linky.get(i));
+                        System.out.println(s.url.get(i));
+                        if (i < s.casSpoja.size() - 1) {
+                            System.out.println("Cas #" + i + ": " + s.casSpoja.get(i).casVSpoji);
+                        }
+                        if (!s.priamySpoj) {
+                            System.out.println("P: " + s.prestup.meno);
+                        }
                     }
                 }
-                System.out.println(s.konecna);
-                System.out.println();
 
+                System.out.println("K: " + s.konecna.meno);
+                System.out.println();
             }
+
+            Intent i = new Intent();
+            i.setClass(getApplicationContext(), ConnectionsListActivity.class);
+            startActivity(i);
+
+
         }
     }
 }
