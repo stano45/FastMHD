@@ -1,6 +1,6 @@
 # FastMHD
 
-//English//
+**English**
 
 FastMHD is my first attempt at a bigger programming project. It is an app for android, which scrapes data from the website imhd.sk (public transport site of Bratislava, Slovakia) and finds an optimal connection between two stops.
 I started this project in order to gain experience in Java and Android development. I've learned tons of design patterns and strategies for building a project of this size.
@@ -9,7 +9,7 @@ Technical details:
 The app uses the Jsoup scraping library for Java, which is used to handle http requests. This lib gets utilized for downloading data about all bus stops and connections. After this download the user gets to input the desired connection (it's enough to to search for a substring of a stop name (e.g. mole in Molecova), after that the user confirms his/her choice. After that a search gets executed that looks for the most optimal connection - the logic looks for all available connection options, then sorts them by time (shortest first).
 
 
-//Slovak//
+**Slovak**
 
 FastMHD je moj prvy pokus o vacsi projekt, je to Android appka, ktora scrapuje data zo stranky imhd.sk, a vyhodnocuje spoje medzi 2 zastavkami.
 Islo hlavne o ziskanie skusenosti v Jave a Android Studio IDE. Naucil som sa plno design patterns v android kodovani a mnoho dalsich veci o 
