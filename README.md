@@ -25,3 +25,5 @@ nepodporuje (mozno v buducnosti :D). Kazdy spoj sa casovo ohodnoti, spoje sa zor
 
 Vyhladavanie spojov je momentalne dost pomale, pretoze kazda linka v kazdom spoji vytvori http request. Tieto data stahovat vopred a
 udrziavat aktualne v nejakej databaze sa mi nechcelo, tak som to takto vyriesil, len aby aplikacia splnila ucel.
+
+Zdrojak v Jave najdete [tu](app/src/main/java/com/stanley/vocabpractice/).
