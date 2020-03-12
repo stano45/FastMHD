@@ -7,26 +7,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_margin="5dp"
         android:weightSum="100">
 
 
         <TextView
             android:id="@+id/cas1"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
             android:layout_alignTop="@+id/first_row"
             android:layout_alignEnd="@+id/first_row"
+            android:layout_margin="5dp"
             android:layout_weight="66.66"
-            android:text="cas1" />
+            android:text="cas1"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/linka1"
-            android:layout_width="333dp"
-            android:layout_height="80dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/first_row"
             android:layout_weight="33.33"
+            android:layout_margin="5dp"
             android:maxLines="4"
-            android:text="linka1" />
+            android:text="linka1"
+            android:textColor="@color/red"/>
     </LinearLayout>
 
     <LinearLayout
@@ -34,74 +39,88 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/first_row"
+        android:layout_margin="5dp"
         android:layout_marginTop="0dp"
         android:orientation="horizontal">
 
 
         <TextView
             android:id="@+id/cas2"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
             android:text="cas2" />
 
         <TextView
             android:id="@+id/zastavka1"
-            android:layout_width="333dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_alignBottom="@+id/second_row"
             android:layout_toEndOf="@+id/second_row"
             android:layout_weight="1"
-            android:text="zastavka1" />
+            android:text="zastavka1"
+            android:textColor="@color/green"
+            />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/third_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:layout_below="@id/second_row"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/cas3"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="cas3" />
+            android:text="cas3"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/linka2"
-            android:layout_width="333dp"
-            android:layout_height="80dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_alignTop="@+id/third_row"
             android:layout_alignEnd="@+id/third_row"
             android:layout_alignBottom="@+id/third_row"
             android:layout_weight="1"
             android:maxLines="4"
-            android:text="linka2" />
+            android:text="linka2"
+            android:textColor="@color/red"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/fourth_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:layout_below="@id/third_row"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/cas4"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
             android:text="cas4" />
 
         <TextView
             android:id="@+id/zastavka2"
-            android:layout_width="333dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_alignBottom="@+id/fourth_row"
             android:layout_weight="1"
-            android:text="zastavka2" />
+            android:text="zastavka2"
+            android:textColor="@color/green"/>
     </LinearLayout>
 
 </RelativeLayout>

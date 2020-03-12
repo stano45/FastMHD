@@ -1,83 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <EditText
-        android:id="@+id/vychodziaInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="259dp"
-        android:layout_marginBottom="427dp"
-        android:ems="10"
-        android:hint="@string/vychodzia"
-        android:inputType="textPersonName"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
-    <EditText
-        android:id="@+id/konecnaInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="304dp"
-        android:layout_marginEnd="99dp"
-        android:layout_marginBottom="382dp"
-        android:ems="10"
-        android:hint="@string/konecna"
-        android:inputType="textPersonName"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="8dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="349dp"
-        android:layout_marginBottom="334dp"
-        android:text="@string/vyhladaj"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/vyhladaj" />
+
+    <EditText
+        android:id="@+id/konecnaInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="1"
+        android:hint="@string/konecna"
+        android:inputType="text"
+        android:visibility="visible" />
+
+
+    <EditText
+        android:id="@+id/vychodziaInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/vychodzia"
+        android:inputType="text"
+        android:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="211dp"
-        android:layout_height="119dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="306dp"
-        android:layout_marginBottom="306dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        tools:visibility="invisible" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/vyberZastavku"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/vyber_zastavky"
+        android:textSize="36sp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/vyhladavamText"
-        android:layout_width="133dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="134dp"
-        android:layout_marginEnd="144dp"
-        android:layout_marginBottom="235dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/vyhladavam"
         android:textSize="24sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar"
-        tools:visibility="invisible" />
-</android.support.constraint.ConstraintLayout>
+        android:visibility="invisible" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+</LinearLayout>

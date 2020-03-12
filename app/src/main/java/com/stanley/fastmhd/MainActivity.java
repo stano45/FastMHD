@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.button).setVisibility(View.INVISIBLE);
                 findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
                 findViewById(R.id.vyhladavamText).setVisibility(View.VISIBLE);
+                findViewById(R.id.vyberZastavku).setVisibility(View.INVISIBLE);
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Toast toast = Toast.makeText(this,
@@ -202,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.button).setVisibility(View.VISIBLE);
             findViewById(R.id.progressBar).setVisibility(View.GONE);
             findViewById(R.id.vyhladavamText).setVisibility(View.GONE);
+            findViewById(R.id.vyberZastavku).setVisibility(View.VISIBLE);
             for (Spoj s : Logic.spoje) {
                 if (s.value != 1000) {
                     System.out.println("-----------------------------------------");
