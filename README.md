@@ -8,6 +8,7 @@ I started this project in order to gain experience in Java and Android developme
 Technical details:
 The app uses the Jsoup scraping library for Java, which is used to handle http requests. This lib gets utilized for downloading data about all bus stops and connections. After this download the user gets to input the desired connection (it's enough to to search for a substring of a stop name (e.g. mole in Molecova), after that the user confirms his/her choice. After that a search gets executed that looks for the most optimal connection - the logic looks for all available connection options, then sorts them by time (shortest first).
 
+Java source files found [here](app/src/main/java/com/stanley/fastmhd/).
 
 **Slovak**
 
