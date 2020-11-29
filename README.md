@@ -1,5 +1,7 @@
 # FastMHD
 
+WARNING: Does not work anymore! Site got redesigned.
+
 **English**
 
 FastMHD is my first attempt at a bigger programming project. It is an app for android, which scrapes data from the website imhd.sk (public transport site of Bratislava, Slovakia) and finds an optimal connection between two stops.
