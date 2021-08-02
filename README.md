@@ -1,6 +1,7 @@
 # FastMHD
+DISCLAIMER: This app scrapes from the site https://imhd.sk/ba/cestovne-poriadky (because of lack of a proper API), which got redesigned in 2020. Therefore, the scraping logic does not work anymore.
 
-WARNING: Does not work anymore! Site got redesigned.
+
 
 **English**
 
